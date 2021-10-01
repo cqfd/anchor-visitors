@@ -82,8 +82,8 @@ describe("visitors", () => {
         }
       );
     } catch (err) {
-        // 0x8f means a constraint failed (correctly)
-        assert.equal(err.code, 0x8f);
+        // 0x92 means a seed constraint failed (correctly)
+        assert.equal(err.code, 0x92);
     }
 
     visitorStateAccount = await program.account.visitorState.fetch(visitorState);

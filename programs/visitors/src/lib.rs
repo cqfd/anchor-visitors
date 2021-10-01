@@ -6,10 +6,10 @@ declare_id!("Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS");
 mod visitors {
     use super::*;
 
-    pub fn introduce_yourself(ctx: Context<Introduction>, _visitor_bump: u8) -> ProgramResult {
+    pub fn introduce_yourself(ctx: Context<Introduction>, visitor_bump: u8) -> ProgramResult {
         msg!("Nice to meet you {}.", ctx.accounts.visitor.key);
-        ctx.accounts.visitor_state.visitor = ctx.accounts.visitor.key();
         ctx.accounts.visitor_state.visit_count = 1;
+        ctx.accounts.visitor_state.bump = visitor_bump;
         Ok(())
     }
 
@@ -37,12 +37,12 @@ pub struct Introduction<'info> {
 #[derive(Accounts)]
 pub struct Visit<'info> {
     visitor: Signer<'info>,
-    #[account(mut, constraint = visitor_state.visitor == visitor.key())]
+    #[account(mut, seeds = [visitor.key.as_ref()], bump = visitor_state.bump)]
     visitor_state: Account<'info, VisitorState>,
 }
 
 #[account]
 pub struct VisitorState {
-    visitor: Pubkey,
     visit_count: u64,
+    bump: u8,
 }
