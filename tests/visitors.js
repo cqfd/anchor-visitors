@@ -15,12 +15,10 @@ describe("visitors", () => {
 
   let visitorState, visitorBump;
   before(async () => {
-    const [_visitorState, _visitorBump] = await anchor.web3.PublicKey.findProgramAddress(
+    [visitorState, visitorBump] = await anchor.web3.PublicKey.findProgramAddress(
       [visitor.publicKey.toBuffer()],
       program.programId
     );
-    visitorState = _visitorState;
-    visitorBump = _visitorBump;
   });
 
   it("It works!", async () => {
