@@ -29,7 +29,7 @@ mod visitors {
 pub struct Introduction<'info> {
     payer: Signer<'info>,
     visitor: Signer<'info>,
-    #[account(init, seeds = [visitor.key.as_ref()], bump = visitor_bump, payer = payer, space = 8 + 32 + 8)]
+    #[account(init, seeds = [visitor.key.as_ref()], bump = visitor_bump, payer = payer, space = 8 + 8 + 1)]
     visitor_state: Account<'info, VisitorState>,
     system_program: Program<'info, System>,
 }
